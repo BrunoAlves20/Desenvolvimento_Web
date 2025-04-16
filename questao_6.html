@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questão 6t</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+        }
+        input, button {
+          padding: 6px;
+          margin: 5px;
+        }
+        h3 {
+          margin-top: 20px;
+        }
+        .box {
+          margin-top: 10px;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+        }
+        pre {
+          white-space: pre-wrap;
+        }
+      </style>
+</head>
+<body>
+    <p>Crie uma nova versão que além de registrar o nome da pessoa, também guarde a data e hora que a pessoa entrou na fila (use Date.now() . Veja como formatar a data usando Intl.DateTimeFormat) .<br>
+        Quando ela for atendida (retirada da fila), deve mostrar quanto tempo levou para ser atendida. use vetores para armazenar as informações. Um vetor para guardar o nome e hora que a pessoa entrou na fila. <br>
+        Crie um outro vetor para armazenar os vetores que tem pessoa e hora que entrou na fila. 
+        A cada atualização deve exibir o nome e data/hora que entrou na fila.<br>
+        Crie um outro vetor para armazenar o nome, data e hora que pessoa entrou na fila, data e hora que foi atendida, quanto tempo demorou para ser atendida. Também deve exibir esses dados a cada atualização.
+        </p>
+    <h2>Sistema de Fila com Registro de Tempo</h2>
+  
+    <input type="text" id="nome" placeholder="Digite o nome">
+    <button onclick="entrarNaFila()">Entrar na fila</button>
+    <button onclick="atenderPessoa()">Atender</button>
+  
+    <h3>Fila Atual:</h3>
+    <div class="box" id="filaAtual"></div>
+  
+    <h3>Histórico de Atendimentos:</h3>
+    <div class="box" id="historico"></div>
+  
+    <script>
+      const fila = []; // Vetor para guardar [nome, horaEntrada]
+      const historicoAtendimento = []; // Vetor para guardar registros com entrada, saída e duração
+  
+      const formatador = new Intl.DateTimeFormat("pt-BR", {
+        dateStyle: "short",
+        timeStyle: "medium"
+      });
+  
+      function entrarNaFila() {
+        const nomeInput = document.getElementById("nome");
+        const nome = nomeInput.value.trim();
+  
+        if (!nome) {
+          alert("Digite um nome válido.");
+          return;
+        }
+  
+        const horaEntrada = Date.now();
+        fila.push([nome, horaEntrada]);
+  
+        nomeInput.value = "";
+        atualizarFila();
+      }
+  
+      function atenderPessoa() {
+        if (fila.length === 0) {
+          alert("A fila está vazia.");
+          return;
+        }
+  
+        const [nome, horaEntrada] = fila.shift();
+        const horaAtendimento = Date.now();
+        const tempoEspera = Math.floor((horaAtendimento - horaEntrada) / 1000); // em segundos
+  
+        historicoAtendimento.push({
+          nome,
+          entrada: horaEntrada,
+          atendimento: horaAtendimento,
+          espera: tempoEspera
+        });
+  
+        alert(`Atendendo: ${nome}\nTempo de espera: ${tempoEspera} segundo(s)`);
+  
+        atualizarFila();
+        atualizarHistorico();
+      }
+  
+      function atualizarFila() {
+        const filaAtualDiv = document.getElementById("filaAtual");
+  
+        if (fila.length === 0) {
+          filaAtualDiv.innerHTML = "Fila vazia.";
+          return;
+        }
+  
+        let texto = "";
+        fila.forEach(([nome, hora]) => {
+          texto += `• ${nome} - Entrou às ${formatador.format(hora)}\n`;
+        });
+  
+        filaAtualDiv.innerHTML = `<pre>${texto}</pre>`;
+      }
+  
+      function atualizarHistorico() {
+        const historicoDiv = document.getElementById("historico");
+  
+        if (historicoAtendimento.length === 0) {
+          historicoDiv.innerHTML = "Nenhum atendimento registrado ainda.";
+          return;
+        }
+  
+        let texto = "";
+        historicoAtendimento.forEach(item => {
+          texto += `• ${item.nome} - Entrou: ${formatador.format(item.entrada)} | ` +
+                   `Atendido: ${formatador.format(item.atendimento)} | ` +
+                   `Espera: ${item.espera} segundo(s)\n`;
+        });
+  
+        historicoDiv.innerHTML = `<pre>${texto}</pre>`;
+      }
+    </script>
+  
+  </body>
+  </html>

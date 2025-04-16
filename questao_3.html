@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Questão 3</title>
+</head>
+<body>
+   <p>Leia 2 números "início" e "fim". Escreva os números inteiros entre "início" e "fim" em ordem crescente com as seguintes substituições:<br>
+        a) se o número for divisível por 3 exiba a palavra PING no lugar do número<br>
+        b) se o número for divisível por 5 exiba a palavra PONG no lugar do número<br>
+        c) se o número for divisivel por 3 e por 5 exiba a palavra PINGPONG no lugar do número</p>
+
+  <h2>Substituições PING / PONG</h2>
+  <label for="inicio">Início:</label>
+  <input type="number" id="inicio">
+  <label for="fim">Fim:</label>
+  <input type="number" id="fim"><br>
+
+  <button onclick="mostrarPingPong()">Executar</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function mostrarPingPong() {
+      const inicio = parseInt(document.getElementById("inicio").value);
+      const fim = parseInt(document.getElementById("fim").value);
+      const resultado = document.getElementById("resultado");
+      resultado.innerHTML = "";
+
+      if (isNaN(inicio) || isNaN(fim)) {
+        resultado.innerHTML = "Por favor, insira números válidos.";
+        return;
+      }
+
+      if (inicio > fim) {
+        resultado.innerHTML = "O número de início deve ser menor ou igual ao fim.";
+        return;
+      }
+
+      for (let i = inicio; i <= fim; i++) {
+        if (i % 3 === 0 && i % 5 === 0) {
+          resultado.innerHTML += "PINGPONG\n";
+        } else if (i % 3 === 0) {
+          resultado.innerHTML += "PING\n";
+        } else if (i % 5 === 0) {
+          resultado.innerHTML += "PONG\n";
+        } else {
+          resultado.innerHTML += i + "\n";
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

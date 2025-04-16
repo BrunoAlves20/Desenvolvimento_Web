@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Questão 4</title>
+  
+</head>
+<body>
+    <p>Escreva um programa para controlar uma fila de atendimento, deve guardar o nome da pessoa ao clicar no botão "entrar na fila" e inserir no final de uma fila (use um vetor para guarda no nome das pessoas). <br>
+    Quando a pessoa for atendida, deve clicar no botão "atender" que vai retirar o nome da pessoa que está no primeiro lugar na fila. A cada atualização, deve exibir os nomes das pessoas que estão na fila. <br>
+     Para inserir no final da fila use o método "push()" e para remover do início da fila use o método "shift()"</p>
+  <h2>Controle de Fila de Atendimento</h2>
+
+  <input type="text" id="nome" placeholder="Digite o nome">
+  <button onclick="entrarNaFila()">Entrar na fila</button>
+  <button onclick="atenderPessoa()">Atender</button>
+
+  <div id="fila"></div>
+
+  <script>
+    const fila = [];
+
+    function atualizarFila() {
+      const filaDiv = document.getElementById("fila");
+
+      if (fila.length === 0) {
+        filaDiv.innerHTML = "Fila vazia.";
+      } else {
+        filaDiv.innerHTML = "Fila: <br>" + fila.join("<br>");
+      }
+    }
+
+    function entrarNaFila() {
+      const nomeInput = document.getElementById("nome");
+      const nome = nomeInput.value.trim();
+
+      if (nome === "") {
+        alert("Digite um nome válido.");
+        return;
+      }
+
+      fila.push(nome);
+      nomeInput.value = "";
+      atualizarFila();
+    }
+
+    function atenderPessoa() {
+      if (fila.length === 0) {
+        alert("Não há ninguém na fila para atender.");
+        return;
+      }
+
+      const atendido = fila.shift();
+      alert("Atendendo: " + atendido);
+      atualizarFila();
+    }
+
+    // Exibe "Fila vazia" no início
+    atualizarFila();
+  </script>
+
+</body>
+</html>

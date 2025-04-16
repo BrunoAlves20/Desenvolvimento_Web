@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questão 5</title>
+</head>
+<body>
+    <p>Escreva um programa que leia uma quantidade de segundos e mostre o correspondente em horas, minutos e segundos. <br>
+        Exemplo: entrada 3670. saída: 1 hora, 1 minuto e 10 segundos.</p>
+    <h2>Conversor de Segundos para Horas, Minutos e Segundos</h2>
+  
+    <label for="segundos">Segundos:</label>
+    <input type="number" id="segundos" placeholder="Ex: 3670">
+    <button onclick="converterTempo()">Converter</button>
+  
+    <div id="resultado"></div>
+  
+    <script>
+      function converterTempo() {
+        const entrada = parseInt(document.getElementById("segundos").value);
+        const resultado = document.getElementById("resultado");
+  
+        if (isNaN(entrada) || entrada < 0) {
+          resultado.innerHTML = "Digite um número válido de segundos.";
+          return;
+        }
+  
+        const horas = Math.floor(entrada / 3600);
+        const minutos = Math.floor((entrada % 3600) / 60);
+        const segundos = entrada % 60;
+  
+        resultado.innerHTML = `${horas} hora${horas !== 1 ? 's' : ''}, ` +
+                              `${minutos} minuto${minutos !== 1 ? 's' : ''} e ` +
+                              `${segundos} segundo${segundos !== 1 ? 's' : ''}.`;
+      }
+    </script>
+  
+  </body>
+  </html>
